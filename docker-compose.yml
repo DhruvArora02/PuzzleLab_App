@@ -1,0 +1,41 @@
+services:
+  mysql:
+    image: mysql/mysql-server:latest
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 506_T6
+      MYSQL_DATABASE: T6_Database
+      MYSQL_USER: pizzataco
+      MYSQL_PASSWORD: pizzataco
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    container_name: backend_container
+    platform: linux/amd64
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/T6_Database
+      SPRING_DATASOURCE_USERNAME: pizzataco
+      SPRING_DATASOURCE_PASSWORD: pizzataco
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend_container
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8080
+volumes:
+  mysql_data:
