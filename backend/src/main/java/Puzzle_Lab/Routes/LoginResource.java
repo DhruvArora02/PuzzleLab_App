@@ -1,1 +1,67 @@
- package Puzzle_Lab.Routes; import jakarta.enterprise.context.ApplicationScoped; import jakarta.transaction.Transactional; import jakarta.ws.rs.*; import jakarta.ws.rs.core.*; import java.util.Map; import org.mindrot.jbcrypt.BCrypt; import Puzzle_Lab.ResponseBody; import Puzzle_Lab.TokenService; import Puzzle_Lab.Entities.User; @ApplicationScoped @Path("/login") @Consumes(MediaType.APPLICATION_JSON) @Produces(MediaType.APPLICATION_JSON) /** * REST API resource for handling user login requests. */ public class LoginResource { /** * Handles user login requests. * Allows authentication via either a temporary password or the original password. * If the user logs in with a temporary password, it will be removed after login. * @param body A map containing "username" and "password" fields. * @return A Response object with a success or error message. */ @POST @Transactional public Response loginUser(Map<String, String> body) { String username = body.get("username"); String password = body.get("password"); if (username == null) { return new ResponseBody(Response.Status.BAD_REQUEST) .addMessage("Missing a 'username' field.") .build(); } if (password == null) { return new ResponseBody(Response.Status.BAD_REQUEST) .addMessage("Missing a 'password' field.") .build(); } User user = User.find("username", username).firstResult(); if (user == null) { return new ResponseBody(Response.Status.UNAUTHORIZED) .addMessage("Invalid username or password.") .build(); } boolean loggedInWithTempPassword = false; boolean isValidPassword = false; // Check if the provided password matches the temporary password if (user.getTempPassword() != null && BCrypt.checkpw(password, user.getTempPassword())) { loggedInWithTempPassword = true; isValidPassword = true; } // Check if the provided password matches the user's stored hashed password if (BCrypt.checkpw(password, user.getHashedPassword())) { isValidPassword = true; } // If neither the temp nor the original password matched, return an error if (!isValidPassword) { System.out.println("Invalid password entered."); return new ResponseBody(Response.Status.UNAUTHORIZED) .addMessage("Invalid username or password.") .build(); } // If the user logged in with a temporary password, remove it after successful login if (loggedInWithTempPassword) { user.clearTempPassword(); user.persistAndFlush(); // Commit the removal of temp password to the database System.out.println("Temporary password successfully removed."); } // Send a token to the frontend to store. String token = TokenService.generateToken(user.getID()); return new ResponseBody(Response.Status.OK) .addMessage("Login successful!") .addObject("token", token) .addObject("user", user.getFullDTO()) .build(); } }
+package Puzzle_Lab.Routes; 
+
+import jakarta.enterprise.context.ApplicationScoped; 
+import jakarta.transaction.Transactional; 
+import jakarta.ws.rs.*; 
+import jakarta.ws.rs.core.*; 
+
+import java.util.Map; 
+import org.mindrot.jbcrypt.BCrypt; 
+
+import Puzzle_Lab.ResponseBody; 
+import Puzzle_Lab.TokenService; 
+import Puzzle_Lab.Entities.User; 
+
+@ApplicationScoped 
+ @Path("/login") 
+ @Consumes(MediaType.APPLICATION_JSON) 
+ @Produces(MediaType.APPLICATION_JSON) 
+ 
+ /** 
+ * REST API resource for handling user login requests. 
+ */ 
+ public class LoginResource { 
+  /** 
+  * Handles user login requests. 
+  * Allows authentication via either a temporary password or the original password. 
+  * If the user logs in with a temporary password, it will be removed after login. 
+  * @param body A map containing "username" and "password" fields. 
+  * @return A Response object with a success or error message. 
+  */ 
+  @POST @Transactional 
+  public Response loginUser(Map<String, String> body) { 
+   String username = body.get("username"); 
+   String password = body.get("password"); 
+   if (username == null) { 
+    return new ResponseBody(Response.Status.BAD_REQUEST).addMessage("Missing a 'username' field.").build(); 
+   } 
+   if (password == null) { 
+    return new ResponseBody(Response.Status.BAD_REQUEST).addMessage("Missing a 'password' field.").build(); 
+   } 
+   User user = User.find("username", username).firstResult(); 
+   if (user == null) { 
+    return new ResponseBody(Response.Status.UNAUTHORIZED).addMessage("Invalid username or password.").build(); 
+   } 
+   boolean loggedInWithTempPassword = false; 
+   boolean isValidPassword = false; // Check if the provided password matches the temporary password 
+   if (user.getTempPassword() != null && BCrypt.checkpw(password, user.getTempPassword())) 
+   { 
+    loggedInWithTempPassword = true; 
+    isValidPassword = true; 
+   } // Check if the provided password matches the user's stored hashed password 
+   if (BCrypt.checkpw(password, user.getHashedPassword())) { 
+    isValidPassword = true; 
+   } // If neither the temp nor the original password matched, return an error 
+   if (!isValidPassword) { 
+    System.out.println("Invalid password entered."); 
+    return new ResponseBody(Response.Status.UNAUTHORIZED).addMessage("Invalid username or password.").build(); 
+   } // If the user logged in with a temporary password, remove it after successful login 
+   if (loggedInWithTempPassword) { 
+    user.clearTempPassword(); 
+    user.persistAndFlush(); // Commit the removal of temp password to the database 
+    System.out.println("Temporary password successfully removed."); 
+   } // Send a token to the frontend to store. 
+   String token = TokenService.generateToken(user.getID()); 
+   return new ResponseBody(Response.Status.OK).addMessage("Login successful!").addObject("token", token).addObject("user", user.getFullDTO()).build(); 
+  } 
+ }
