@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+    /* HSL - COLOR (0-360), SATURATION (0-100%), LIGHTNESS (0-100%) */
+    :root {
+        --background: 0 0% 100%; /* The background of most components */
+        --foreground: 0 0% 3.9%; /* The foreground (text) of most components */
+        --card: 0 0% 100%; /* The background of card components */
+        --card-foreground: 0 0% 3.9%; /* The foreground (text) of card components */
+        --popover: 0 0% 100%; /* The background color of popover components. USED FOR: Select Menus */
+        --popover-foreground: 0 0% 3.9%; /* The foreground (text) of popover components. USED FOR: Select Menus */
+        --primary: 0 0% 9%; /* Background color of primary buttons USED FOR: Sign in button */
+        --primary-foreground: 0 0% 98%; /* Text color of primary buttons. USED FOR: Sign in button */
+        --secondary: 0 0% 96.1%;
+        --secondary-foreground: 0 0% 9%;
+        --muted: 0 0% 90%; /* Background color of disabled things. USED FOR: tabs */
+        --muted-foreground: 0 0% 45.1%; /* Text color of secondary text, like descriptions. USED FOR: many descriptions */
+        --accent: 0 0% 96.1%; /* Background color when hovering over something. */
+        --accent-foreground: 0 0% 9%; /* Text color when hovering over something. Should be the same --foreground */
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 0 0% 70%; /* Border color of most elements. Should be the same as --input */
+        --input: 0 0% 70%; /* Border color of input elemnts. Should be the same as --border */
+        --ring: 0 0% 3.9%;
+        --chart-1: 12 76% 61%;
+        --chart-2: 173 58% 39%;
+        --chart-3: 197 37% 24%;
+        --chart-4: 43 74% 66%;
+        --chart-5: 27 87% 67%;
+        --radius: 0.5rem; /* How circular an outline is*/
+        --nav: 216, 45%, 45%; /* The background of the nav bar */
+        --nav-foreground: 0 0% 100%; /* Text color on navbar */
+        --nav-hover: 291 30% 70%; /* Hover color on navbar buttons */
+        --link: 206 90% 50%; /* Link color */
+        --link-hover: 206 90% 30%; /* Link color */
+        --puzzle-selected: 213 97% 87%; /* Background color of selected letter & ring color of connected letters */
+        --puzzle-selected-ring: 217 91% 60%; /* Ring color of selected letter */
+        --puzzle-connected: 214 100% 95%; /* Background color of connected letter */
+    }
+
+    /* This is the dark theme that comes with tailwind stuff. Keep it here for reference*/
+    .dark {
+        --background: 0 0% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 0 0% 3.9%;
+        --card-foreground: 0 0% 98%;
+        --popover: 0 0% 3.9%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 0 0% 9%;
+        --secondary: 0 0% 14.9%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 0 0% 14.9%;
+        --muted-foreground: 0 0% 63.9%;
+        --accent: 0 0% 14.9%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 0 0% 14.9%;
+        --input: 0 0% 14.9%;
+        --ring: 0 0% 83.1%;
+        --chart-1: 220 70% 50%;
+        --chart-2: 160 60% 45%;
+        --chart-3: 30 80% 55%;
+        --chart-4: 280 65% 60%;
+        --chart-5: 340 75% 55%;
+    }
+
+    .hoverbutton {
+        @apply text-nav-foreground hover:text-nav-hover transition-colors duration-200
+    }
+
+    a {
+        @apply text-link hover:text-link
+    }
+}
+
+/*
+/* Default theme colors (light mode) */
+/*:root {
+    --background: #ffffff;
+    --foreground: #000000;
+    --nav: #6082B6;
+}*/
+
+/* Dark theme color overrides */
+html.theme-DARK {
+    --background: 0 0% 7.5%;
+    --foreground: 0 0% 95%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: var(--foreground);
+    --primary: var(--foreground);
+    --primary-foreground: 0 0% 5%;
+    --muted: 0 0% 28%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: var(--foreground);
+    --border: 0 0% 25%;
+    --input: var(--border);
+    --nav: 0 0% 20%;
+    --nav-foreground: var(--foreground);
+    --nav-hover: 291 30% 70%;
+    --puzzle-selected: 213 91% 70%;
+    --puzzle-selected-ring: 217 91% 50%;
+    --puzzle-connected: 214 100% 85%;
+}
+
+/* Dark theme: Form elements styling for readability */
+/* This block sets the text color for select, input, and textarea elements in dark theme */
+/*html.theme-dark select,
+html.theme-dark input,
+html.theme-dark textarea {
+  color: #000000;
+}*/
+
+/* Additional dark theme styling for form elements */
+/* Ensures that form elements have a white background and a light border in dark mode */
+/*html.theme-dark select,
+html.theme-dark input,
+html.theme-dark textarea {
+  color: #000000;
+  background-color: #ffffff;
+  border-color: #cccccc; 
+}**/
+
+/* Raspberry theme color overrides */
+/*html.theme-raspberry {
+    --background: #FFF9FB;
+    --nav: #FE83AE;
+    --foreground: #510136;
+}*/
+
+/* Mango theme color overrides */
+/*html.theme-mango {
+    --background: #fffefa;
+    --nav: #FFC933;
+    --foreground: #6D1900;
+}*/
+
+/* Lake theme color overrides */
+/*html.theme-lake {
+    --background: #edf9ff;
+    --nav: #85b6ce;
+    --foreground: #012931;
+}*/
+
+/* Custom button outline override for custom themes */
+/* In Raspberry, Mango, and Lake themes, outline buttons will use the navigation bar color as the border */
+/*html.theme-raspberry .btn-outline,
+html.theme-mango .btn-outline,
+html.theme-lake .btn-outline {
+  border-color: var(--nav) !important;
+}*/
