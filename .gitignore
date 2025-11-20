@@ -1,0 +1,57 @@
+# Frontend
+
+# dependencies
+frontend/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+frontend/coverage
+
+# next.js
+frontend/.next
+frontend/out/
+
+# production
+frontend/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+
+# Backend
+# Gradle cache and logs
+backend/build/
+.gradle/
+backend/bin
+*.lock
+
+# IDE settings
+.vscode/
+.idea/
+
+# Local database files
+users.db
+
+**/application.properties
+**/.env
