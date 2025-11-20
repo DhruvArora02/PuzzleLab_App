@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id 'io.quarkus' version '3.19.1'  // Use the Quarkus plugin
+}
+
+group = 'backend'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.maven.apache.org/maven2' }
+
+}
+
+
+jar {
+    archiveBaseName = 'backend'  // Set the base name of the JAR
+}
+
+dependencies {
+    implementation 'org.mindrot:jbcrypt:0.4'
+    implementation 'org.json:json:20230227'
+    implementation 'io.quarkus:quarkus-hibernate-orm-panache:3.19.1' //
+    implementation 'io.quarkus:quarkus-jdbc-mysql:3.19.1' //
+    implementation 'io.quarkus:quarkus-rest-jackson:3.19.1'
+    implementation 'io.quarkus:quarkus-smallrye-jwt:3.21.0.CR1'
+    implementation 'io.quarkus:quarkus-mailer:3.21.0.CR1'
+}
