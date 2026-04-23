@@ -56,13 +56,5 @@ Additionally, the project is designed with a broader audience in mind, including
 - Follow code style guidelines.
 - Submit pull requests for review before merging.
 
-### Standards & Conventions
----
-
-<!--This is a link to a seperate coding conventions document / style guide-->
-[Style Guide & Conventions](STYLE.md)
-
-### Prototype
----
 
 Visit the project's [Figma](https://www.figma.com/design/x1LcIQ4UPfRiuHEANglx8u/T06-Puzzle-game?node-id=0-1&t=LpHs09RGdHmT840l-1). Welcome to view and edit.
