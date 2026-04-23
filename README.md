@@ -49,7 +49,6 @@ Additionally, the project is designed with a broader audience in mind, including
 - A scalable database for managing word-clue pairs for automatic generation features.
 - Secure authentication for user data protection (if account-based features are implemented).
 
-```
 ### Contribution Guidelines
 ---
 <!--How team members should contribute (branching strategy, pull requests, issue tracking).-->
